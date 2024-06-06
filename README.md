@@ -1,7 +1,7 @@
 # PyZas!: A Python library for atomic integer operations
 
 **PyZas** is a Python library designed for performing atomic integer operations with the speed and efficiency of a zas!
-(Inspired by the sudden impact sound "zas!"). PyZas ensures your calculations are executed atomically and safely. Perfect 
+(Inspired by the sudden impact sound "zas" spanish onomatopoeia)). PyZas ensures your calculations are executed atomically and safely. Perfect 
 for scenarios requiring quick, thread-safe manipulations.
 
 ## Installation
