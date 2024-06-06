@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "pyzas"
+version = "1.0"
+description = "A Python library for atomic integer operations"
+authors = ["César Pomar <cesaralfredo.pineiro@usc.es>"]
+readme = "README.md"
+build = "c_build.py"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[build-system]
+requires = ["poetry-core", "setuptools"]
+build-backend = "poetry.core.masonry.api"
