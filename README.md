@@ -15,26 +15,32 @@ pip install pyzas
 
 The PyZas module implements the following atomic types:
 
-* **AtomicInt**: Basic signed number
-* **AtomicLong**:  Signed number of 64 bits
-* **AtomicULong**: Unsigned number of 64 bits
+* **AtomicInt**: An atomic int type
+* **AtomicLong**:  An atomic 64-bytes int type
+* **AtomicULong**: An atomic 64-bytes unsigned int type
 
 The three types implement the following functions:
 
-* **free_lock_level() -> int**: indicates that the given atomic type is native lock-free
-* **load() -> int**: reads a value from an atomic object
-* **store(int)**: stores a value in an atomic object
-* **exchange(int) -> int**: stores a value in an atomic object
-* **fetch_add(int) -> int**: atomic addition and returns the value obj held previously
-* **fetch_sub(int) -> int**: atomic subtraction and returns the value obj held previously
-* **compare_exchange(int,int) -> int**: swaps a value with an atomic object if the old value is what is expected, otherwise reads the old value
+* **free_lock_level() -> int**: Determines if the atomic object is implemented lock-free
+* **load() -> int**: Reads a value from an atomic object
+* **store(int)**: Stores a value in an atomic object
+* **exchange(int) -> int**: Atomically replaces the value in an atomic object
+* **fetch_add(int) -> int**: Performs atomic addition
+* **fetch_sub(int) -> int**: Performs atomic subtraction
+* **compare_exchange(int, int) -> int**: Swaps a value with an atomic object if the old value is what is expected, otherwise reads the old value
 
 Module also implements **AtomicFlag** with support for spinlock:
 
 * **test_and_set() -> bool**: sets an atomic flag to true and returns the old value
-* **clear()**: sets an atomic flag to false
-* **spin_lock()**: causes a thread trying to acquire a lock to simply wait in a loop ("spin")
-* **spin_unlock()**: releases the lock
+* **clear()**: Sets the atomic_flag to false
+* **spin_lock()**: Causes a thread trying to acquire a lock to simply wait in a loop ("spin")
+* **spin_unlock()**: Releases the lock
+
+For more details:
+
+```python
+help(pyzas)
+```
 
 ## Example
 

@@ -1,157 +1,110 @@
 
 #include "types.h"
 #include "methods.h"
+#include "doc.h"
 
 
-static struct PyModuleDef pyzas_module = {
+struct PyModuleDef pyzas_module = {
         PyModuleDef_HEAD_INIT,
         .m_name = "pyzas",
-        .m_doc = "performing python atomic integer operations with the speed and efficiency of a zas!",
+        .m_doc = pyzas_doc,
         .m_size = -1
 };
 
-static PyMethodDef atomicFlag_methods[] = {
-        {"test_and_set",             (PyCFunction) atomicFlag_test_and_set,             METH_FASTCALL,
-                "sets an atomic flag to true and returns the old value"
-        },
-        {"clear",            (PyCFunction) atomicFlag_clear,            METH_FASTCALL,
-                "sets an atomic flag to false"
-        },
-        {"spin_lock",         (PyCFunction) atomicFlag_spin_lock,         METH_FASTCALL,
-                "causes a thread trying to acquire a lock to simply wait in a loop (\"spin\")"
-        },
-        {"spin_unlock",        (PyCFunction) atomicFlag_spin_unlock,        METH_FASTCALL,
-                "releases the lock"
-        },
+PyMethodDef atomicFlag_methods[] = {
+        {"test_and_set", (PyCFunction) atomicFlag_test_and_set, METH_FASTCALL, test_and_set_doc},
+        {"clear",        (PyCFunction) atomicFlag_clear,        METH_FASTCALL, clear_doc},
+        {"spin_lock",    (PyCFunction) atomicFlag_spin_lock,    METH_FASTCALL, spin_lock},
+        {"spin_unlock",  (PyCFunction) atomicFlag_spin_unlock,  METH_FASTCALL, spin_unlock},
         {NULL}  /* Sentinel */
 };
 
-static PyTypeObject AtomicFlagType = {
+PyTypeObject AtomicFlagType = {
         .ob_base = PyVarObject_HEAD_INIT(NULL, 0)
         .tp_name = "pyzas.AtomicFlag",
-        .tp_doc = PyDoc_STR("Single flag atomic type"),
+        .tp_doc = atomic_flag_doc,
         .tp_basicsize = sizeof(AtomicFlag),
         .tp_itemsize = 0,
         .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
-        .tp_new = atomicFlag_new,
+        .tp_new = PyType_GenericNew,
         .tp_init = (initproc) atomicFlag_init,
         .tp_methods = atomicFlag_methods,
 };
 
-static PyMethodDef atomicInt_methods[] = {
-        {"free_lock_level",  (PyCFunction) atomicInt_free_lock_level,  METH_NOARGS,
-                "indicates that the given atomic type is native lock-free"
-        },
-        {"load",             (PyCFunction) atomicInt_load,             METH_FASTCALL,
-                "reads a value from an atomic object"
-        },
-        {"store",            (PyCFunction) atomicInt_store,            METH_FASTCALL,
-                "stores a value in an atomic object"
-        },
-        {"exchange",         (PyCFunction) atomicInt_exchange,         METH_FASTCALL,
-                "stores a value in an atomic object"
-        },
-        {"fetch_add",        (PyCFunction) atomicInt_fetch_add,        METH_FASTCALL,
-                "atomic addition and returns the value obj held previously"
-        },
-        {"fetch_sub",        (PyCFunction) atomicInt_fetch_sub,        METH_FASTCALL,
-                "atomic subtraction and returns the value obj held previously"
-        },
-        {"compare_exchange", (PyCFunction) atomicInt_compare_exchange, METH_FASTCALL,
-                "swaps a value(2) with an atomic object if the old value is what is expected(1), otherwise reads the old value"
-        },
+PyMethodDef atomicInt_methods[] = {
+        {"free_lock_level",  (PyCFunction) atomicInt_free_lock_level,  METH_NOARGS,   free_lock_level_doc},
+        {"load",             (PyCFunction) atomicInt_load,             METH_FASTCALL, load_doc},
+        {"store",            (PyCFunction) atomicInt_store,            METH_FASTCALL, store_doc},
+        {"exchange",         (PyCFunction) atomicInt_exchange,         METH_FASTCALL, exchange_doc},
+        {"fetch_add",        (PyCFunction) atomicInt_fetch_add,        METH_FASTCALL, fetch_add_doc},
+        {"fetch_sub",        (PyCFunction) atomicInt_fetch_sub,        METH_FASTCALL, fetch_sub_doc},
+        {"compare_exchange", (PyCFunction) atomicInt_compare_exchange, METH_FASTCALL, compare_exchange_doc},
         {NULL}  /* Sentinel */
 };
 
-static PyTypeObject AtomicIntType = {
+PyTypeObject AtomicIntType = {
         .ob_base = PyVarObject_HEAD_INIT(NULL, 0)
         .tp_name = "pyzas.AtomicInt",
-        .tp_doc = PyDoc_STR("integer atomic type"),
+        .tp_doc = atomic_int_doc,
         .tp_basicsize = sizeof(AtomicInt),
         .tp_itemsize = 0,
         .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
-        .tp_new = atomicInt_new,
+        .tp_new = PyType_GenericNew,
         .tp_init = (initproc) atomicInt_init,
         .tp_methods = atomicInt_methods,
 };
 
-static PyMethodDef atomicLong_methods[] = {
-        {"free_lock_level",  (PyCFunction) atomicLong_free_lock_level,  METH_NOARGS,
-                "indicates that the given atomic type is native lock-free"
-        },
-        {"load",             (PyCFunction) atomicLong_load,             METH_FASTCALL,
-                "reads a value from an atomic object"
-        },
-        {"store",            (PyCFunction) atomicLong_store,            METH_FASTCALL,
-                "stores a value in an atomic object"
-        },
-        {"exchange",         (PyCFunction) atomicLong_exchange,         METH_FASTCALL,
-                "stores a value in an atomic object"
-        },
-        {"fetch_add",        (PyCFunction) atomicLong_fetch_add,        METH_FASTCALL,
-                "atomic addition and returns the value obj held previously"
-        },
-        {"fetch_sub",        (PyCFunction) atomicLong_fetch_sub,        METH_FASTCALL,
-                "atomic subtraction and returns the value obj held previously"
-        },
-        {"compare_exchange", (PyCFunction) atomicLong_compare_exchange, METH_FASTCALL,
-                "swaps a value(2) with an atomic object if the old value is what is expected(1), otherwise reads the old value"
-        },
+PyMethodDef atomicLong_methods[] = {
+        {"free_lock_level",  (PyCFunction) atomicLong_free_lock_level,  METH_NOARGS,   free_lock_level_doc},
+        {"load",             (PyCFunction) atomicLong_load,             METH_FASTCALL, load_doc},
+        {"store",            (PyCFunction) atomicLong_store,            METH_FASTCALL, store_doc},
+        {"exchange",         (PyCFunction) atomicLong_exchange,         METH_FASTCALL, exchange_doc},
+        {"fetch_add",        (PyCFunction) atomicLong_fetch_add,        METH_FASTCALL, fetch_add_doc},
+        {"fetch_sub",        (PyCFunction) atomicLong_fetch_sub,        METH_FASTCALL, fetch_sub_doc},
+        {"compare_exchange", (PyCFunction) atomicLong_compare_exchange, METH_FASTCALL, compare_exchange_doc},
         {NULL}  /* Sentinel */
 };
 
-static PyTypeObject AtomicLongType = {
+PyTypeObject AtomicLongType = {
         .ob_base = PyVarObject_HEAD_INIT(NULL, 0)
         .tp_name = "pyzas.AtomicLong",
-        .tp_doc = PyDoc_STR("long integer atomic type"),
+        .tp_doc = atomic_long_doc,
         .tp_basicsize = sizeof(AtomicLong),
         .tp_itemsize = 0,
         .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
-        .tp_new = atomicLong_new,
+        .tp_new = PyType_GenericNew,
         .tp_init = (initproc) atomicLong_init,
         .tp_methods = atomicLong_methods,
 };
 
-static PyMethodDef atomicULong_methods[] = {
-        {"free_lock_level",  (PyCFunction) atomicULong_free_lock_level,  METH_NOARGS,
-                "indicates that the given atomic type is native lock-free"
-        },
-        {"load",             (PyCFunction) atomicULong_load,             METH_FASTCALL,
-                "reads a value from an atomic object"
-        },
-        {"store",            (PyCFunction) atomicULong_store,            METH_FASTCALL,
-                "stores a value in an atomic object"
-        },
-        {"exchange",         (PyCFunction) atomicULong_exchange,         METH_FASTCALL,
-                "stores a value in an atomic object"
-        },
-        {"fetch_add",        (PyCFunction) atomicULong_fetch_add,        METH_FASTCALL,
-                "atomic addition and returns the value obj held previously"
-        },
-        {"fetch_sub",        (PyCFunction) atomicULong_fetch_sub,        METH_FASTCALL,
-                "atomic subtraction and returns the value obj held previously"
-        },
-        {"compare_exchange", (PyCFunction) atomicULong_compare_exchange, METH_FASTCALL,
-                "swaps a value(2) with an atomic object if the old value is what is expected(1), otherwise reads the old value"
-        },
+PyMethodDef atomicULong_methods[] = {
+        {"free_lock_level",  (PyCFunction) atomicULong_free_lock_level,  METH_NOARGS,   free_lock_level_doc},
+        {"load",             (PyCFunction) atomicULong_load,             METH_FASTCALL, load_doc},
+        {"store",            (PyCFunction) atomicULong_store,            METH_FASTCALL, store_doc},
+        {"exchange",         (PyCFunction) atomicULong_exchange,         METH_FASTCALL, exchange_doc},
+        {"fetch_add",        (PyCFunction) atomicULong_fetch_add,        METH_FASTCALL, fetch_add_doc},
+        {"fetch_sub",        (PyCFunction) atomicULong_fetch_sub,        METH_FASTCALL, fetch_sub_doc},
+        {"compare_exchange", (PyCFunction) atomicULong_compare_exchange, METH_FASTCALL, compare_exchange_doc},
         {NULL}  /* Sentinel */
 };
 
-static PyTypeObject AtomicULongType = {
+PyTypeObject AtomicULongType = {
         .ob_base = PyVarObject_HEAD_INIT(NULL, 0)
         .tp_name = "pyzas.AtomicULong",
-        .tp_doc = PyDoc_STR("Unsigned Long integer atomic type"),
+        .tp_doc = atomic_ulong_doc,
         .tp_basicsize = sizeof(AtomicULong),
         .tp_itemsize = 0,
         .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
-        .tp_new = atomicULong_new,
+        .tp_new = PyType_GenericNew,
         .tp_init = (initproc) atomicULong_init,
         .tp_methods = atomicULong_methods,
 };
 
+
 PyMODINIT_FUNC PyInit_pyzas(void) {
     PyObject *m;
-    if (PyType_Ready(&AtomicIntType) < 0) {
+    if (PyType_Ready(&AtomicFlagType) < 0 || PyType_Ready(&AtomicIntType) < 0 ||
+        PyType_Ready(&AtomicLongType) < 0 || PyType_Ready(&AtomicULongType) < 0) {
         return NULL;
     }
 
@@ -159,6 +112,10 @@ PyMODINIT_FUNC PyInit_pyzas(void) {
     if (m == NULL) {
         return NULL;
     }
+
+    #ifdef Py_GIL_DISABLED
+    PyUnstable_Module_SetGIL(m, Py_MOD_GIL_NOT_USED);
+    #endif
 
     if (PyModule_AddObjectRef(m, "AtomicFlag", (PyObject *) &AtomicFlagType) < 0) {
         Py_DECREF(m);

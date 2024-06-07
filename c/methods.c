@@ -1,6 +1,14 @@
 
 #include "methods.h"
 
+// to ONLY debug in python 3.12 because 3.13 is still beta
+#if PY_MINOR_VERSION < 13
+    int PyLong_AsInt(PyObject *obj){
+        return (int) PyLong_AsLong(obj);
+    }
+#endif
+
+
 PyObject *atomicInt_free_lock_level(PyObject *self, PyObject *arg) {
     return PyLong_FromLong(ATOMIC_INT_LOCK_FREE);
 }
@@ -13,30 +21,15 @@ PyObject *atomicULong_free_lock_level(PyObject *self, PyObject *arg) {
     return PyLong_FromLong(ATOMIC_LLONG_LOCK_FREE);
 }
 
-PyObject *atomicFlag_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
-    return type->tp_alloc(type, 0);
-}
-
-PyObject *atomicInt_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
-    return type->tp_alloc(type, 0);
-}
-
-PyObject *atomicLong_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
-    return type->tp_alloc(type, 0);
-}
-
-PyObject *atomicULong_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
-    return type->tp_alloc(type, 0);
-}
-
 
 int atomicFlag_init(AtomicFlag *self, PyObject *args, PyObject *kwds) {
     atomic_flag_clear(&self->value);
+    return 0;
 }
 
 int atomicInt_init(AtomicInt *self, PyObject *args, PyObject *kwds) {
     int tmp = 0;
-    if (!PyArg_ParseTuple(args, "i", args, &tmp)) {
+    if (!PyArg_ParseTuple(args, "|i", args, &tmp)) {
         return -1;
     }
 
@@ -46,7 +39,7 @@ int atomicInt_init(AtomicInt *self, PyObject *args, PyObject *kwds) {
 
 int atomicLong_init(AtomicLong *self, PyObject *args, PyObject *kwds) {
     long long int tmp = 0;
-    if (!PyArg_ParseTuple(args, "L", args, &tmp)) {
+    if (!PyArg_ParseTuple(args, "|L", args, &tmp)) {
         return -1;
     }
 
@@ -56,7 +49,7 @@ int atomicLong_init(AtomicLong *self, PyObject *args, PyObject *kwds) {
 
 int atomicULong_init(AtomicULong *self, PyObject *args, PyObject *kwds) {
     unsigned long long int tmp = 0;
-    if (!PyArg_ParseTuple(args, "K", args, &tmp)) {
+    if (!PyArg_ParseTuple(args, "|K", args, &tmp)) {
         return -1;
     }
 

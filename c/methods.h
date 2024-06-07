@@ -11,15 +11,6 @@ PyObject *atomicLong_free_lock_level(PyObject *self, PyObject *arg);
 PyObject *atomicULong_free_lock_level(PyObject *self, PyObject *arg);
 
 
-PyObject *atomicFlag_new(PyTypeObject *type, PyObject *args, PyObject *kwds);
-
-PyObject *atomicInt_new(PyTypeObject *type, PyObject *args, PyObject *kwds);
-
-PyObject *atomicLong_new(PyTypeObject *type, PyObject *args, PyObject *kwds);
-
-PyObject *atomicULong_new(PyTypeObject *type, PyObject *args, PyObject *kwds);
-
-
 int atomicFlag_init(AtomicFlag *self, PyObject *args, PyObject *kwds);
 
 int atomicInt_init(AtomicInt *self, PyObject *args, PyObject *kwds);
