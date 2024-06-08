@@ -183,21 +183,21 @@ PyObject *atomicULong_compare_exchange(AtomicULong *self, PyObject *const *args,
 }
 
 
-PyObject *atomicFlag_test_and_set(AtomicInt *self, PyObject *const *args, Py_ssize_t nargs){
+PyObject *atomicFlag_test_and_set(AtomicFlag *self, PyObject *const *args, Py_ssize_t nargs){
     return PyBool_FromLong(atomic_flag_test_and_set(&self->value));
 }
 
-PyObject *atomicFlag_clear(AtomicInt *self, PyObject *const *args, Py_ssize_t nargs){
+PyObject *atomicFlag_clear(AtomicFlag *self, PyObject *const *args, Py_ssize_t nargs){
     atomic_flag_clear(&self->value);
     Py_RETURN_NONE;
 }
 
-PyObject *atomicFlag_spin_lock(AtomicInt *self, PyObject *const *args, Py_ssize_t nargs){
+PyObject *atomicFlag_spin_lock(AtomicFlag *self, PyObject *const *args, Py_ssize_t nargs){
     while(atomic_flag_test_and_set(&self->value));
     Py_RETURN_NONE;
 }
 
-PyObject *atomicFlag_spin_unlock(AtomicInt *self, PyObject *const *args, Py_ssize_t nargs){
+PyObject *atomicFlag_spin_unlock(AtomicFlag *self, PyObject *const *args, Py_ssize_t nargs){
     atomic_flag_clear(&self->value);
     Py_RETURN_NONE;
 }
