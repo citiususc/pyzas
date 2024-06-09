@@ -2,8 +2,15 @@
 name = "pyzas"
 version = "1.0"
 description = "PyZas!: A Python library for atomic integer operations"
-authors = ["César Pomar <cesaralfredo.pineiro@usc.es>"]
+license = "LGPL-3.0-only"
+authors = ["Cesar Pomar <cesaralfredo.pineiro@usc.es>"]
 readme = "README.md"
+repository = "https://github.com/citiususc/pyzas"
+keywords = ["HPC", "OMP", "OpenMP", "Multi-language", "Programming models"]
+classifiers = [
+    "Topic :: Software Development",
+    "Topic :: Utilities"
+]
 build = "c_build.py"
 
 [tool.poetry.dependencies]
