@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyzas"
-version = "1.0"
+version = "1.0.1"
 description = "PyZas!: A Python library for atomic integer operations"
 license = "LGPL-3.0-only"
 authors = ["Cesar Pomar <cesaralfredo.pineiro@usc.es>"]
