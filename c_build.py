@@ -25,7 +25,7 @@ setup(
     ]
 )
 
-if "PYZAS_FIX_BUILD" in os.environ:
+if "PYZAS_FIX_GIL" in os.environ:
     base_name = f"cp3{str(sys.version_info[1])}"
     expected_name = f"{base_name}t"
     for file in os.listdir("pyzas"):
